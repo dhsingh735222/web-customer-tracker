@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+
+  # ── MySQL Database ──────────────────────────────────────────────
+  mysql:
+    image: mysql:8.0
+    container_name: crm-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: web_customer_tracker
+      MYSQL_USER: springstudent
+      MYSQL_PASSWORD: springstudent
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./sql/docker-init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "springstudent", "-pspringstudent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  # ── Tomcat Application Server ───────────────────────────────────
+  tomcat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: crm-tomcat
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      JAVA_OPTS: "-Xms256m -Xmx512m"
+    volumes:
+      # Mount a custom persistence.properties for Docker networking
+      - ./docker/persistence-docker.properties:/usr/local/tomcat/webapps/web-customer-tracker/WEB-INF/classes/persistence.properties:ro
+
+volumes:
+  mysql_data:
+    driver: local
