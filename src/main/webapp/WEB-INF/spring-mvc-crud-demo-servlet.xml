@@ -63,6 +63,8 @@
                 <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
                 <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
                 <prop key="hibernate.connection.characterEncoding">UTF-8</prop>
+                <!-- Spring MVC handles validation via @Valid; disable Hibernate BV integration -->
+                <prop key="javax.persistence.validation.mode">none</prop>
             </props>
         </property>
     </bean>

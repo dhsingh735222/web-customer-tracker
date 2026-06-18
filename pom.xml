@@ -100,6 +100,16 @@
             <version>2.0.1.Final</version>
         </dependency>
 
+        <!-- EL 3.0 implementation required by hibernate-validator 6.x.
+             Marked 'provided' so Tomcat 9's own EL impl wins at runtime,
+             but the class is visible during bean-validation bootstrap. -->
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.el</artifactId>
+            <version>3.0.1-b12</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- ==================== LOGGING ==================== -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -170,15 +180,32 @@
                 </configuration>
             </plugin>
 
-            <!-- Tomcat Maven Plugin (for embedded run) -->
+            <!-- Cargo Maven Plugin — runs app on embedded Tomcat 9 -->
             <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven3-plugin</artifactId>
+                <version>1.10.12</version>
                 <configuration>
-                    <port>8080</port>
-                    <path>/web-customer-tracker</path>
-                    <uriEncoding>UTF-8</uriEncoding>
+                    <container>
+                        <containerId>tomcat9x</containerId>
+                        <type>embedded</type>
+                    </container>
+                    <configuration>
+                        <properties>
+                            <cargo.servlet.port>8090</cargo.servlet.port>
+                            <cargo.logging>medium</cargo.logging>
+                        </properties>
+                    </configuration>
+                    <deployables>
+                        <deployable>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>${project.artifactId}</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>/web-customer-tracker</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
                 </configuration>
             </plugin>
 
