@@ -54,3 +54,6 @@ logs/
 
 # ── Test reports ──────────────────────────────────────────────
 target/surefire-reports/
+
+# Temporarily excluded until gh token has 'workflow' scope
+# .github/workflows/ci-cd.yml
