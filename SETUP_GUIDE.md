@@ -26,7 +26,7 @@ mysql --version      # should show 8.x
 ## Step 1 — Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/web-customer-tracker.git
+git clone https://github.com/dhsingh735222/web-customer-tracker.git
 cd web-customer-tracker
 ```
 
@@ -85,10 +85,10 @@ A successful build produces: `target/web-customer-tracker.war`
 ## Step 5A — Run with Embedded Tomcat (Recommended)
 
 ```bash
-mvn tomcat7:run
+mvn package cargo:run
 ```
 
-Open: **http://localhost:8080/web-customer-tracker/customer/list**
+Open: **http://localhost:8090/web-customer-tracker/customer/list**
 
 ---
 
@@ -168,7 +168,7 @@ Set `hibernate.hbm2ddl.auto=create` on first run in `persistence.properties`, th
 You can override `persistence.properties` via JVM system properties:
 
 ```bash
-mvn tomcat7:run \
+mvn package cargo:run \
   -Djdbc.url="jdbc:mysql://localhost:3306/web_customer_tracker?useSSL=false" \
   -Djdbc.user=springstudent \
   -Djdbc.password=springstudent

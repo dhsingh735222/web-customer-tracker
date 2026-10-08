@@ -9,11 +9,11 @@ Managers can create, read, update, and delete customer records through a clean b
 
 | Feature | Details |
 |---|---|
-| List customers | Paginated table sorted by last name |
+| List customers | Table sorted by last name, then first name |
 | Add customer | Form with server-side validation |
 | Update customer | Pre-populated form with existing data |
 | Delete customer | JS confirmation dialog before deletion |
-| Search customers | Full-text search on name and email |
+| Search customers | Case-insensitive search on first name, last name and email |
 | Flash messages | Success notifications after CUD operations |
 | Responsive UI | Works on desktop and mobile |
 
@@ -33,7 +33,6 @@ Managers can create, read, update, and delete customer records through a clean b
 | Build | Apache Maven 3.9 |
 | Container | Apache Tomcat 9 |
 | Tests | JUnit 4 + Mockito |
-| CI/CD | GitHub Actions |
 | Docker | Docker + Docker Compose |
 
 ---
@@ -48,7 +47,7 @@ Managers can create, read, update, and delete customer records through a clean b
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/YOUR_USERNAME/web-customer-tracker.git
+git clone https://github.com/dhsingh735222/web-customer-tracker.git
 cd web-customer-tracker
 
 # 2. Set up the database
@@ -57,11 +56,11 @@ mysql -u root -p < sql/setup.sql
 # 3. Build
 mvn clean package -DskipTests
 
-# 4. Run (embedded Tomcat)
-mvn tomcat7:run
+# 4. Run (embedded Tomcat 9 via the Cargo plugin)
+mvn package cargo:run
 ```
 
-Open: http://localhost:8080/web-customer-tracker/customer/list
+Open: http://localhost:8090/web-customer-tracker/customer/list
 
 ---
 
@@ -116,10 +115,16 @@ web-customer-tracker/
 | [DATABASE_GUIDE.md](DATABASE_GUIDE.md) | Schema, queries, migrations |
 | [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) | Local, Docker, AWS, Railway |
 | [TESTING_GUIDE.md](TESTING_GUIDE.md) | Running and writing tests |
-| [GITHUB_WORKFLOW.md](GITHUB_WORKFLOW.md) | Git workflow & CI/CD |
+| [GITHUB_WORKFLOW.md](GITHUB_WORKFLOW.md) | Git workflow |
 
 ---
 
 ## License
 
-MIT — free to use for learning and commercial projects.
+MIT. See [LICENSE](LICENSE).
+
+---
+
+## Author
+
+**Dheeraj Kumar** · [Portfolio](https://dhsingh735222.github.io) · [LinkedIn](https://www.linkedin.com/in/dheeraj-kumar-netsec/)
